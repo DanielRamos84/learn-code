@@ -1,23 +1,16 @@
-const todos= [{
-    text:'Order cat food',
-    completed: false
-}, {
-    text:'Clean kitchen',
-    completed: true
-}, {
-    text: 'Buy food',
-    completed:  true
-}, {
-    text: 'Do work',
-    completed: false
-}, {
-    text: 'Excercise',
-    completed:true
-}]
+let todos= []
 
 const filters= {
     searchFilter:'',
     hideCompleted: false
+}
+
+const storedTodos= JSON.parse(localStorage.getItem('todos'))
+
+if(storedTodos !== null){
+    todos= storedTodos
+} else {
+    todos= []
 }
 
 const renderTodos= function(todos, filters){
@@ -33,6 +26,7 @@ const renderTodos= function(todos, filters){
         }
     })
 
+
     document.getElementById("todos").innerHTML=''
 
     const incompleteTodos= filterTodos.filter(todo=>{
@@ -40,12 +34,12 @@ const renderTodos= function(todos, filters){
     })      
 
     const newEl= document.createElement('h2')
-    newEl.textContent= `You have ${incompleteTodos.length} items left to do`
+    newEl.textContent= `You have: ${incompleteTodos.length} items left to do`
     document.getElementById("todos").appendChild(newEl)
     
     filterTodos.forEach(todo=>{
         const createEl= document.createElement('p')
-        createEl.textContent= todo.text
+        createEl.textContent= todo.text    
         document.getElementById("todos").appendChild(createEl)
     })    
 }
@@ -59,15 +53,16 @@ document.getElementById("search-text").addEventListener('input', function(e){
 
 document.getElementById("my-form").addEventListener('submit', function(e){
     e.preventDefault()
-        todos.push({
+    todos.push({
         text: e.target.elements.formTodo.value,
         completed: false
     })
-    renderTodos(todos,filters)
+    localStorage.setItem('todos', JSON.stringify(todos))
     e.target.elements.formTodo.value= ''
+    renderTodos(todos,filters)
 })
-  
+
 document.getElementById("hide-done").addEventListener('change', function(e){
     filters.hideCompleted= e.target.checked
     renderTodos(todos,filters)
-})
+}) 
