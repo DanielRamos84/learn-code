@@ -8,19 +8,42 @@ if (notesJSON !==null){
 }
 }
 
+//Remove a note from the list
+const removeNote= function(id){
+  const noteIndex= notes.findIndex (note=>{
+    return note.id===id
+  })
+  if (noteIndex > -1){
+    notes.splice(noteIndex, 1)
+  }
+}
+
 // Generate the DOM structure for a note
 const generateDomNote= function(note){
 const createEl= document.createElement('div')
-const noteEl= document.createElement('span')
+const noteEl= document.createElement('a')
+
+//Crete individual id for achor tag for each note
+noteEl.setAttribute('href', `/edit.html#${note.id}`)
 const button= document.createElement('button')
-//Setup the remove note button
+
+//Setup the remove note button and event handler
 button.textContent= 'x'
 createEl.appendChild(button)
+
+//Wire up event listener to delete unique entry by id, update localStorage and re render
+button.addEventListener('click', function(e){
+  removeNote(note.id)
+  localStorage.setItem('notes', JSON.stringify(notes))
+  renderNotes(notes,filters)
+})
+
 
 //Setup the note title text
   if (note.title.length > 0){
     noteEl.textContent= note.title
   } else {
+
     noteEl.textContent= 'Unnamed note'
   }
   createEl.appendChild(noteEl)
