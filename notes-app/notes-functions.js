@@ -5,13 +5,18 @@ if (notesJSON !==null){
   return JSON.parse(notesJSON) // return keyword inserted
 } else {
   return [] // return keyword inserted
+  }
 }
+
+// Save the notes to localStorage
+const saveNotes= function(notes) {
+  localStorage.setItem('notes', JSON.stringify(notes))
 }
 
 //Remove a note from the list
 const removeNote= function(id){
   const noteIndex= notes.findIndex (note=>{
-    return note.id===id
+    return note.id === id
   })
   if (noteIndex > -1){
     notes.splice(noteIndex, 1)
@@ -34,10 +39,9 @@ createEl.appendChild(button)
 //Wire up event listener to delete unique entry by id, update localStorage and re render
 button.addEventListener('click', function(e){
   removeNote(note.id)
-  localStorage.setItem('notes', JSON.stringify(notes))
+  saveNotes(notes)
   renderNotes(notes,filters)
 })
-
 
 //Setup the note title text
   if (note.title.length > 0){
