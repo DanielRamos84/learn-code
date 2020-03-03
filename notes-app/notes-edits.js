@@ -1,7 +1,7 @@
 const noteId= location.hash.substring(1)
-const notes= getSavedNotes()
+let notes= getSavedNotes()
 
-const note= notes.find (note=>{
+let note= notes.find (note=>{
     return note.id===noteId
 })
 
@@ -10,21 +10,38 @@ if (note === undefined){
 }
 
 const noteTitle= document.getElementById("note-title")
+noteTitle.value= note.title
 noteTitle.addEventListener('input', function(e){
     note.title= e.target.value
-    localStorage.setItem('notes', JSON.stringify(notes))
+    saveNotes(notes)
 })
 
 const textBody= document.getElementById("text-body")
+textBody.value= note.body
 textBody.addEventListener('input', function(e){
     note.body= e.target.value
-    localStorage.setItem('notes', JSON.stringify(notes))
-    getSavedNotes(notes)
+    saveNotes(notes)
 })
 
 const remBtn= document.getElementById("remove-note")
 remBtn.addEventListener('click', function (e){
     removeNote(note.id)
     location.assign('/index.html')
-    getSavedNotes(notes)
+    saveNotes(notes)
+})
+
+window.addEventListener('storage', function(e){
+    if (e.key === 'notes'){
+         notes= JSON.parse(e.newValue)
+         note= notes.find (note=>{
+            return note.id===noteId
+        })
+        
+        if (note === undefined){
+            location.assign('/index.html')
+        }
+        
+        noteTitle.value= note.title
+        textBody.value= note.body
+}
 })
