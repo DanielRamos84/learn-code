@@ -3,7 +3,7 @@ const addVehicleBtn= document.getElementById('add-vehicle')
 const clearAll= document.getElementById('clear-all')
 const mainContainer= document.createElement('div')
 
-const vehicleArray= getSavedNotes() //set vehicle array to the return value ofo SavedNotes function in functions.js
+let vehicleArray= getSavedNotes()//See functions.js
 
 addVehicleBtn.addEventListener('click', function(){
     vehicleArray.push({
@@ -20,9 +20,7 @@ const filters= {
 } 
 
 //Save to localStorage
-const saveVehicles = vehicles=>{
-    localStorage.setItem('keysSaved', JSON.stringify(vehicleArray))
-}
+saveVehicles(vehicleArray)//See functions.js
 
 //Main function to render info on DOM
 const renderData= function(vehicleArray){//IF I PASS FILTERS AS ARGUMENT THEN I GET ERROR 
@@ -80,17 +78,7 @@ const renderData= function(vehicleArray){//IF I PASS FILTERS AS ARGUMENT THEN I 
 }
 
 renderData(vehicleArray, filters)
-
-const removeEntry= function(id){
-    const entryIndex= vehicleArray.findIndex(function(entry){
-        return entry.id===id
-    })
-    if (entryIndex>-1){
-        vehicleArray.splice(entryIndex, 1)
-    }
-    saveVehicles(vehicleArray)
-    renderData(vehicleArray)
-}
+removeEntry(vehicleArray)//See functions.js
 
 //Filter data
 inputVehicle.addEventListener('input', function(e){
@@ -104,7 +92,6 @@ clearAll.addEventListener('click', function(e){
     mainContainer.innerHTML= ''
     vehicleArray= []
 })
-
 
 //Things that need work FILTERING
 //Render message when both page refreshed and there's no items and when you clear main div.. Message get to work find cars
