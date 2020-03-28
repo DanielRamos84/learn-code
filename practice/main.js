@@ -3,16 +3,7 @@ const addVehicleBtn= document.getElementById('add-vehicle')
 const clearAll= document.getElementById('clear-all')
 const mainContainer= document.createElement('div')
 
-let vehicleArray =[]
-
-//Begin check if data avaiable in localStorage set array to use this data
-const userSaved= localStorage.getItem('keysSaved')
-if (userSaved!==null) {
-     vehicleArray= JSON.parse(userSaved)
-} else {
-     vehicleArray=[]
-}
-//End check if data avaiable in localStorage set array to use this data
+const vehicleArray= getSavedNotes() //set vehicle array to the return value ofo SavedNotes function in functions.js
 
 addVehicleBtn.addEventListener('click', function(){
     vehicleArray.push({
