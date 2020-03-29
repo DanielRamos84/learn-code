@@ -9,18 +9,26 @@ const getSavedNotes= function (){
     }
     //End check if data avaiable in localStorage set array to use this data
 
+const saveVehicles = vehicles=>{
+    localStorage.setItem('keysSaved', JSON.stringify(vehicleArray))
+}
 
-    const saveVehicles = vehicles=>{
-        localStorage.setItem('keysSaved', JSON.stringify(vehicleArray))
-    }
-
-    const removeEntry= function(id){
-        const entryIndex= vehicleArray.findIndex(function(entry){
-            return entry.id===id
-        })
+const removeEntry= function(id){
+    const entryIndex= vehicleArray.findIndex(entry=>{
+    return entry.id===id
+    })
         if (entryIndex>-1){
             vehicleArray.splice(entryIndex, 1)
         }
         saveVehicles(vehicleArray)
         renderData(vehicleArray)
-    }
+}
+
+const toggleCheck= function(id){
+    const toggleFind= vehicleArray.find(entry=>{
+        return entry.id === id    
+    })
+    if(toggleFind !== undefined){
+        toggleFind.inStock= !toggleFind.inStock
+    }    
+}
