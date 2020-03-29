@@ -8,7 +8,7 @@ let vehicleArray= getSavedNotes()//See functions.js
 addVehicleBtn.addEventListener('click', function(){
     vehicleArray.push({
         input: inputVehicle.value,
-        id: moment.now(),
+        id: uuidv4(),
         inStock: true
     })
     renderData(vehicleArray)
@@ -61,20 +61,31 @@ const renderData= function(vehicleArray){//IF I PASS FILTERS AS ARGUMENT THEN I 
         createElement.textContent= entry.input
         delBtn.textContent= 'x'
 
+        //Setup checkbox state
+        createCheckbox.checked= entry.inStock
+
         document.querySelector('body').appendChild(mainContainer)
         mainContainer.appendChild(container)
         container.appendChild(createCheckbox)
         container.appendChild(createElement)
         container.appendChild(delBtn)
 
+        saveVehicles(vehicleArray)
+        inputVehicle.value= ''
+        inputVehicle.focus()    
+        
+        //Listen for button click to remove entry
+        delBtn.addEventListener('click', function(e){
+            removeEntry(entry.id)
+        })
 
-    delBtn.addEventListener('click', function(e){
-        removeEntry(entry.id)
+        //Listen for toggle on checkbox
+        createCheckbox.addEventListener('change', function(e){
+            toggleCheck(entry.id)
+            saveVehicles(vehicleArray)
+            renderData(vehicleArray, filters)
         })
     })
-    saveVehicles(vehicleArray)
-    inputVehicle.value= ''
-    inputVehicle.focus()    
 }
 
 renderData(vehicleArray, filters)
@@ -95,3 +106,4 @@ clearAll.addEventListener('click', function(e){
 
 //Things that need work FILTERING
 //Render message when both page refreshed and there's no items and when you clear main div.. Message get to work find cars
+//Being able to toggle the chechbox, retain status and have page modify message count
