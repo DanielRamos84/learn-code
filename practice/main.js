@@ -3,24 +3,25 @@ const addVehicleBtn= document.getElementById('add-vehicle')
 const clearAll= document.getElementById('clear-all')
 const mainContainer= document.createElement('div')
 
-let vehicleArray= getSavedNotes()//See functions.js
+const vehicleArray= getSavedNotes()//See functions.js
 
 addVehicleBtn.addEventListener('click', function(){
+    const idAssign= uuidv4() 
     vehicleArray.push({
         input: inputVehicle.value,
-        id: uuidv4(),
+        body: '',
+        id: idAssign,
         inStock: true
     })
-    renderData(vehicleArray)
+    saveVehicles(vehicleArray)
+    inputVehicle.value= ''
+    location.assign(`/edit.html#${idAssign}`)
 })
 
 //Empty array to use for filtering data
 const filters= {
     searchText: ''
 } 
-
-//Save to localStorage
-saveVehicles(vehicleArray)//See functions.js
 
 //Main function to render info on DOM
 const renderData= function(vehicleArray){//IF I PASS FILTERS AS ARGUMENT THEN I GET ERROR 
@@ -32,7 +33,6 @@ const renderData= function(vehicleArray){//IF I PASS FILTERS AS ARGUMENT THEN I 
     const filterVehicle= vehicleArray.filter(entry=>{
         return entry.input.toLowerCase().includes(filters.searchText.toLowerCase())
     })
-    console.log('match')
     mainContainer.innerHTML=''
     
     //Display how many vehicles available  work on page refresh if 0 cars in array I want message "you don't have any cars" to automatically show up
@@ -52,17 +52,37 @@ const renderData= function(vehicleArray){//IF I PASS FILTERS AS ARGUMENT THEN I 
 
     //Create the buttons and text
     vehicleArray.forEach(entry=>{  
-        const container= document.createElement('div')
-        const createCheckbox= document.createElement('input')
-        const createElement= document.createElement('span')
-        const delBtn= document.createElement('button')
+        const container= document.createElement('div')   
 
+        //Create checkbox and initialize
+        const createCheckbox= document.createElement('input')
         createCheckbox.setAttribute('type', 'checkbox')
-        createElement.textContent= entry.input
-        delBtn.textContent= 'x'
 
         //Setup checkbox state
         createCheckbox.checked= entry.inStock
+
+        //Listen for toggle on checkbox
+        createCheckbox.addEventListener('change', function(e){
+            toggleCheck(entry.id)
+            saveVehicles(vehicleArray)
+            renderData(vehicleArray, filters)
+        })
+
+        //Create text entry
+        const createElement= document.createElement('a')
+        createElement.setAttribute ('href', `/edit.html#${entry.id}`)
+        createElement.textContent= entry.input
+         
+        //Create delete button
+        const delBtn= document.createElement('button')
+        delBtn.textContent= 'x'
+        
+        //Listen for button click to remove entry
+        delBtn.addEventListener('click', function(e){
+            removeEntry(entry.id)
+            saveVehicles(vehicleArray)
+            renderData(vehicleArray)
+        })     
 
         document.querySelector('body').appendChild(mainContainer)
         mainContainer.appendChild(container)
@@ -73,19 +93,7 @@ const renderData= function(vehicleArray){//IF I PASS FILTERS AS ARGUMENT THEN I 
         saveVehicles(vehicleArray)
         inputVehicle.value= ''
         inputVehicle.focus()    
-        
-        //Listen for button click to remove entry
-        delBtn.addEventListener('click', function(e){
-            removeEntry(entry.id)
-        })
-
-        //Listen for toggle on checkbox
-        createCheckbox.addEventListener('change', function(e){
-            toggleCheck(entry.id)
-            saveVehicles(vehicleArray)
-            renderData(vehicleArray, filters)
-        })
-    })
+    })   
 }
 
 renderData(vehicleArray, filters)
