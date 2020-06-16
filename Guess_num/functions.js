@@ -1,21 +1,15 @@
-let userWinsTotal
-let computerWinsTotal
+let userTallyTotal
+let computerTallyTotal
 
 const userGuess= (userNumber)=>{
     let userTallyTotal= localStorage.getItem('userWinsTotal')
     let computerTallyTotal= localStorage.getItem('computerWinsTotal')
     let message=''
-    if (userTallyTotal==null){
-        userWinsTotal= 0
-        computerWinsTotal= computerTallyTotal 
+
+        if (userTallyTotal==null){
+        userWinsTotal= 0 
     } else if (computerTallyTotal==null){
         computerWinsTotal= 0
-        userWinsTotal= userTallyTotal
-        } else {
-        // userWinsTotal= userWinsTotal||userTallyTotal  
-        // computerWinsTotal= computerWinsTotal||computerTallyTotal
-        console.log(userWinsTotal)
-        console.log(computerWinsTotal)
     }
     
     let numberChoice= userNumber
@@ -30,19 +24,19 @@ const userGuess= (userNumber)=>{
     }
     
     if (numberChoice===randomNum) {
-        parseInt(userWinsTotal, 10)
-        userWinsTotal++
-        localStorage.setItem('userWinsTotal', userWinsTotal)
+        parseInt(userTallyTotal, 10)
+        userTallyTotal++
+        localStorage.setItem('userWinsTotal', userTallyTotal)
         message+= `You won! You guessed: ${numberChoice} and the computer guessed: ${randomNum}`
     } else {    
-        parseInt(computerWinsTotal, 10)
-        computerWinsTotal++
-        localStorage.setItem('computerWinsTotal', computerWinsTotal)
+        parseInt(computerTallyTotal, 10)
+        computerTallyTotal++
+        localStorage.setItem('computerWinsTotal', computerTallyTotal)
         message+= `Sorry Try Again! You guessed: ${numberChoice} and the computer guessed: ${randomNum}`
     }
         resetField()
         displayResult(message)
-        countWins(userWinsTotal,computerWinsTotal)
+        countWins(userTallyTotal,computerTallyTotal)
 }
 
 const displayResult= (message)=>{    
@@ -51,11 +45,9 @@ const displayResult= (message)=>{
     document.getElementById('result-section').appendChild(displayResultEl)
 }
 
-const countWins= (userWinsTotal, computerWinsTotal)=>{   
-    console.log(userWinsTotal)
-    console.log(computerWinsTotal)
+const countWins= (userTallyTotal, computerTallyTotal)=>{   
     const countWinsEl= document.createElement('h2')
-    countWinsEl.textContent= `User Total Win: ${userWinsTotal} Computer Total Win: ${computerWinsTotal}`
+    countWinsEl.textContent= `User Total Win: ${userTallyTotal} Computer Total Win: ${computerTallyTotal}`
     document.getElementById('count-section').appendChild(countWinsEl)
 }
 
