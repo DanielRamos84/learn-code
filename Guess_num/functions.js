@@ -1,4 +1,4 @@
-let userTallyTotal
+llet userTallyTotal
 let computerTallyTotal
 
 const userGuess= (userNumber)=>{
@@ -7,9 +7,9 @@ const userGuess= (userNumber)=>{
     let message=''
 
         if (userTallyTotal==null){
-        userWinsTotal= 0 
+            userTallyTotal= 0 
     } else if (computerTallyTotal==null){
-        computerWinsTotal= 0
+        computerTallyTotal= 0
     }
     
     let numberChoice= userNumber
