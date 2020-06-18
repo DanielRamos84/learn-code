@@ -1,16 +1,11 @@
-llet userTallyTotal
-let computerTallyTotal
+let userTallyTotal
+let computerTallyTotal 
 
 const userGuess= (userNumber)=>{
-    let userTallyTotal= localStorage.getItem('userWinsTotal')
-    let computerTallyTotal= localStorage.getItem('computerWinsTotal')
     let message=''
-
-        if (userTallyTotal==null){
-            userTallyTotal= 0 
-    } else if (computerTallyTotal==null){
-        computerTallyTotal= 0
-    }
+    localStorage.getItem('userWinsTotal')!= null ? userTallyTotal : userTallyTotal= 0
+    localStorage.getItem('computerWinsTotal')!= null ? computerTallyTotal : computerTallyTotal= 0
+    //Current problem I'm facing now is that refreshing the page and submitting a value changes localStorage value to NaN
     
     let numberChoice= userNumber
     const randomNum= Math.floor(Math.random()*1)
