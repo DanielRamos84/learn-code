@@ -1,12 +1,14 @@
-let userTallyTotal
-let computerTallyTotal 
+let userTallyTotal= localStorage.getItem('userWinsTotal')
+let computerTallyTotal= localStorage.getItem('computerWinsTotal')
 
-const userGuess= (userNumber)=>{
-    let message=''
+const checkStoredData=()=>{
     localStorage.getItem('userWinsTotal')!= null ? userTallyTotal : userTallyTotal= 0
     localStorage.getItem('computerWinsTotal')!= null ? computerTallyTotal : computerTallyTotal= 0
-    //Current problem I'm facing now is that refreshing the page and submitting a value changes localStorage value to NaN
-    
+}
+
+const userGuess= (userNumber)=>{
+    checkStoredData()
+    let message=''
     let numberChoice= userNumber
     const randomNum= Math.floor(Math.random()*1)
     numberChoice= parseInt(numberChoice, 10)
@@ -40,13 +42,16 @@ const displayResult= (message)=>{
     document.getElementById('result-section').appendChild(displayResultEl)
 }
 
-const countWins= (userTallyTotal, computerTallyTotal)=>{   
+const countWins= (userTallyTotal, computerTallyTotal)=>{    
     const countWinsEl= document.createElement('h2')
-    countWinsEl.textContent= `User Total Win: ${userTallyTotal} Computer Total Win: ${computerTallyTotal}`
+    countWinsEl.textContent= `User Total Win: ${userTallyTotal || 0} Computer Total Win: ${computerTallyTotal || 0}`
     document.getElementById('count-section').appendChild(countWinsEl)
 }
 
 const resetField= ()=>{
     enterValue.value=''
     enterValue.focus()
+    countSection.textContent=''
 }
+
+countWins(userTallyTotal, computerTallyTotal)
