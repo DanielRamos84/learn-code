@@ -16,6 +16,7 @@ resetButton.addEventListener('click', function(e){
     e.preventDefault()
     localStorage.clear()
     countSection.textContent=''
-    resetField()
     resultSection.textContent=''
+    resetField()
+    countWins(0,0)
 })
