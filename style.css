@@ -1,0 +1,30 @@
+body {
+    background:rgb(0 0 0 / 25%);
+    font-size: 26px;
+}
+
+#nav-bar {
+    padding: 26px;
+    text-align: right;
+    text-transform: uppercase;
+}
+
+#nav-bar > a {
+    color: aquamarine;
+    text-decoration: none;
+    transition: color 0.5s;/*what is this doing?*/
+}
+
+#nav-bar > a:hover {
+    transition: color 0.5s;
+}
+
+#nav-bar > .active-link {
+    color: aquamarine;
+    border-bottom-style: solid;
+}
+
+#item-container {
+    padding: 30px;
+    color: rgb(255 255 255);
+}
