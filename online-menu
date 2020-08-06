@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta class="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Restaurant | Online Menu</title>
+    <link rel="shortcut icon" href="images/pngtree-green-leaf-icon-graphic-design-template-vector-png-image_3990501.jpg" type="image/x-icon" />
+</head>
+<div class= "nav-container">
+    <nav id= "nav-bar">
+        <a href= "index.html" class="active-link">Menu</a>
+        <a href= "about.html">About</a>
+        <a href= "Checkout.html">Checkout</a>
+    </nav>
+</div>
+<button id= "remove-button">Remove All</button>
+<div id= "item-container">
+    <div class= "item-row">
+        <input type= "checkbox" class= "checkbox" value= "10"> Item#1 $10 
+        <input class= "counter-Items" type= "number" placeholder= "How many?" min= "1" max="10" style="width: 100px"> <button class= "remove-button">Remove</button> <br><br>
+    </div>
+    <div class= "item-row">
+        <input type= "checkbox" class= "checkbox"  value= "8"> Item#2 $8
+        <input class= "counter-Items" type= "number" placeholder= "How many?" min= "1" max="10" style="width: 100px"> <button class= "remove-button">Remove</button><br><br>
+    </div>
+    <div class= "item-row">
+        <input type= "checkbox" class= "checkbox"  value= "6"> Item#3 $6
+        <input class= "counter-Items" type= "number" placeholder= "How many?" min= "1" max="10" style="width: 100px"> <button class= "remove-button">Remove</button><br><br>
+    </div>
+    <div class= "item-row">
+        <input type= "checkbox" class= "checkbox"  value= "4"> Item#4 $4
+        <input class= "counter-Items" type= "number" placeholder= "How many?" min= "1" max="10" style="width: 100px"> <button class= "remove-button">Remove</button><br><br>
+    </div>
+    <div class= "item-row">
+        <input type= "checkbox" class= "checkbox"  value= "2"> Item#5 $2
+        <input class= "counter-Items" type= "number" placeholder= "How many?" min= "1" max="10" style="width: 100px"> <button class= "remove-button">Remove</button><br><br>
+    </div>
+    
+<div id= "Total-Display">
+    <h3 id="display-total">Current Total $
+        <span id= "total-text"></span>
+    </h3>
+</div>
+<button id= "btn-checkout">Checkout</button>
+<script src= "functions.js"></script>
+<body>
+    <script src= "checkout-cart.js"></script>    
+</body>
+</html>
+
