@@ -9,10 +9,8 @@
         radioCheckedOne= document.questions.firstQuestion,
         radioCheckedTwo= document.questions.secondQuestion,
         radioCheckedThree= document.questions.thirdQuestion,
-        numberOfQuestions= document.questions.children.length,
-        loopfirstQuestion= Array.from(document.querySelectorAll('input[name="firstQuestion"]')),
-        loopsecondQuestion= Array.from(document.querySelectorAll('input[name="secondQuestion"]')),
-        loopthirdQuestion= Array.from(document.querySelectorAll('input[name="thirdQuestion"]'));
+        numberOfQuestions= document.questions.children.length;
+        clickOnFormArea= document.forms,
         sectionTwo.style.display= 'none';
         sectionThree.style.display= 'none';
 
@@ -128,58 +126,20 @@
         }
     }
 
-   
-
     let submitBtn= document.createElement('button');
-    submitBtn.setAttribute('id', 'sBtn');
-    submitBtn.innerText= 'Click to submit';
-    sectionThree.append(submitBtn);
-    sBtn.disabled= true;
+    submitBtn.innerHTML= 'Click to Submit';
+    submitBtn.id= 'clickBtn';
+    submitBtn.disabled= true;
+    document.querySelector('form').appendChild(submitBtn);
 
-    checkQuestionHasAnswer();
-   /*Function below is where I'm getting stuck I think I got the part where I can individually loop on each of the 3 questions and check that something is checked, then i want to pass that value (true) to validateAllInputs function that checks I have 3 radio buttons selected and enable submit.  I can get it to work by passing only one parameter to the function but not for all 3.  I think it has to do with the scope of my variables statusofXquestion but I've changed these to be gloabl and I'm getting same results.*/
-    function checkQuestionHasAnswer(){
-        let statusOfFirstQuestion;
-        for (i=0; i<loopfirstQuestion.length; i++){
-                let clickedRadioOne= loopfirstQuestion[i];
-                clickedRadioOne.addEventListener('click', function(e){
-                    statusOfFirstQuestion= e.target.checked;
-                    console.log(statusOfFirstQuestion)
-                    })
-        }
 
-        let statusOfSecondQuestion;
-        for (i=0; i<loopsecondQuestion.length; i++){
-            let clickedRadioTwo= loopsecondQuestion[i];
-            clickedRadioTwo.addEventListener('click', function(e){
-                statusOfSecondQuestion= e.target.checked;
-                console.log(statusOfSecondQuestion)
-                })
-        }
-
-        let statusOfThirdQuestion;
-        for (i=0; i<loopthirdQuestion.length; i++){
-            let clickedRadioThree= loopthirdQuestion[i];
-            clickedRadioThree.addEventListener('click', function(e){
-                statusOfThirdQuestion= e.target.checked;
-                console.log(statusOfThirdQuestion)
-                })
-        }
-        // console.log(statusOfFirstQuestion, statusOfSecondQuestion, statusOfThirdQuestion);
-        validateAllInputs((statusOfFirstQuestion, statusOfSecondQuestion, statusOfThirdQuestion));
-    }
-
-    function validateAllInputs(statusOfFirstQuestion, statusOfSecondQuestion, statusOfThirdQuestion){
-        console.log(statusOfFirstQuestion, statusOfSecondQuestion, statusOfThirdQuestion);
-        if ((statusOfFirstQuestion) && (statusOfSecondQuestion) && (statusOfThirdQuestion)){
-            sBtn.disabled= false;
-        } else {
-            sBtn.disabled= true;
-        }
-    }
-
-    sBtn.addEventListener('click', checkAnswer)
-
+    window.addEventListener('click', function(e){
+        if ((radioCheckedOne.value!=='') && (radioCheckedTwo.value!=='') && (radioCheckedThree.value!=='')) {
+            submitBtn.disabled= false;
+            submitBtn.addEventListener('click',checkAnswer);
+        } 
+    })
+        
     function checkAnswer(){
         switch (radioCheckedOne.value){
             case 'Excellent':
@@ -201,17 +161,13 @@
                 score++;
                 break;
         }
-       
         displayScore(score);
-        
     }
 
     function displayScore(){
         finalScore= (((score/numberOfQuestions) * 100).toFixed(2))
-        sBtn.disabled= true;
-        alert(`Congratulations you passed! Final Score: ${finalScore}`);
-        location.reload(); 
-        //create h3 with score and message scroll down to view results
-        //cahnge attribute to show x or checkmark on each answer 
+        alert(`Final Score: ${finalScore}`);
+        /*
+        Stuff to work on now: Create h3 with score and message scroll down to view results and change attribute to show x or checkmark on each answer */
     }
-})(); //self executing function
+})();
