@@ -1,4 +1,4 @@
-  *{
+   *{
     margin:0;
     padding:0;
  }
@@ -59,9 +59,10 @@ Style questionnaire page
     margin: 0 auto;
     padding: 20px;
     margin: 20px;
-    border: 5px solid rgba(0, 0, 0, 0.685);
+    border: 5px solid rgb(0, 0, 0);
     border-radius: 15px;
     line-height: 2.0;
+    font-size: 1.25em;
 }
 
 .section-three h3{
@@ -72,6 +73,15 @@ Style questionnaire page
 form{
     width: 100%;
     line-height: 1.6;
+}
+
+/*
+Style Correct Answer
+*/
+.correct-answer{
+    font-style: italic;
+    font-weight: bolder;
+    text-decoration-line: underline;
 }
 
 /*
