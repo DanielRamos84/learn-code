@@ -5,10 +5,12 @@
         sectionThree= document.querySelector('.section-three'),
         match,
         score=0,
-        finalScore,
         radioCheckedOne= document.questions.firstQuestion,
         radioCheckedTwo= document.questions.secondQuestion,
         radioCheckedThree= document.questions.thirdQuestion,
+        radioBoxGroupOne= Array.from(document.querySelectorAll('input[name="firstQuestion"]')),
+        radioBoxGroupTwo= Array.from(document.querySelectorAll('input[name="secondQuestion"]')),
+        radioBoxGroupThree= Array.from(document.querySelectorAll('input[name="thirdQuestion"]')),
         numberOfQuestions= document.questions.children.length;
         clickOnFormArea= document.forms,
         sectionTwo.style.display= 'none';
@@ -147,34 +149,50 @@
             submitBtn.addEventListener('click',checkAnswer);
         } 
     })
+
+    function disableRdBtns(){
+        radioBoxGroupOne.forEach(item=>{
+            item.setAttribute('disabled', true);
+        })
+
+        radioBoxGroupTwo.forEach(item=>{
+            item.setAttribute('disabled', true);
+        })
+
+        radioBoxGroupThree.forEach(item=>{
+            item.setAttribute('disabled', true);
+        })
+    }
         
-    function checkAnswer(){
+    function checkAnswer(e){
+        e.preventDefault();
+        let answerOneSelection= document.querySelector('input[name="firstQuestion"]:checked');
         switch (radioCheckedOne.value){
             case 'Excellent':
-                console.log ('correct');
                 score++;
                 break;
         }
     
         switch (radioCheckedTwo.value){
             case 'Nice':
-                console.log ('correct');
                 score++;
                 break;
         }
 
         switch (radioCheckedThree.value){
             case 'Friday':
-                console.log ('correct');
                 score++;
                 break;
         }
-        displayScore(score);
+        disableRdBtns();
+        displayScore(answerOneSelection, score);
     }
 
-    function displayScore(){
-        finalScore= (((score/numberOfQuestions) * 100).toFixed(2))
-        alert(`Final Score: ${finalScore}`);
+    function displayScore(answerOneSelection, score){
+        answerOneSelection.parentElement.className= "correct-answer"
+        finalScore= (((score/numberOfQuestions) * 100).toFixed(2));
+
+        // alert(`Final Score: ${finalScore}`);
         /*
         Stuff to work on now: Create h3 with score and message scroll down to view results and change attribute to show x or checkmark on each answer */
     }
