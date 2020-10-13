@@ -29,6 +29,7 @@
                     questionSelected.innerHTML= "No Work Zone has been associated under Team Types for the user";
                     questionSelected.className= "answer";    
                 break;
+
                 case "No Work Zone has been associated under Team Types for the user":
                     questionSelected.innerHTML= "User is able to see all Pending Transactions from Directed Tasks in IQRF/WMS";
                     questionSelected.className= "question";    
@@ -38,6 +39,7 @@
                     questionSelected.innerHTML= 'Locating Rules';
                     questionSelected.className= "answer";    
                 break;
+
                 case "Locating Rules":
                     questionSelected.innerHTML= "These rules are used to direct items to a specific Locating Zone";
                     questionSelected.className= "question";    
@@ -47,17 +49,19 @@
                     questionSelected.innerHTML= "Picking Rules";
                     questionSelected.className= "answer";    
                 break;
+
                 case "Picking Rules":
                     questionSelected.innerHTML= "These rules are used to find items and pick them from an Allocating Zone";
                     questionSelected.className= "question";    
                 break;
 
-                case "What's your age 4?":
-                    questionSelected.innerHTML= '42';
+                case "Quick way to identify if a location is correctly linked to an AWMS rule?":
+                    questionSelected.innerHTML= 'Inventory Master level for the location click Trans Plan speed button';
                     questionSelected.className= "answer";    
                 break;
-                case "42":
-                    questionSelected.innerHTML= "What's your age 4?";
+
+                case "Inventory Master level for the location click Trans Plan speed button":
+                    questionSelected.innerHTML= "Quick way to identify if a location is correctly linked to an AWMS rule?";
                     questionSelected.className= "question";    
                 break;         
                 
@@ -113,18 +117,22 @@
         /*If all flashcards on individual section are showing the answer hide the active section and show the user a new set of flashcards, repeat process and afterwards show the questionnaire*/
         switch (match){
             case sectionOne.children.length:
-                sectionOne.innerHTML= '';
-                sectionTwo.style.display= 'flex';
+                setTimeout(()=>{
+                    sectionOne.innerHTML= '';
+                    sectionTwo.style.display= 'flex';
+                },2500);
                 match= 0;
                 break;
 
             case sectionTwo.children.length:
-                sectionTwo.style.display= 'none';
+                setTimeout(()=>{
+                    sectionTwo.style.display= 'none';
+                    sectionThree.style.display= 'flex';
+                },2500);
                 match= 0;
-                sectionThree.style.display= 'flex';    
                 break;     
         }
-    }
+}
 
     let submitBtn= document.createElement('button');
     submitBtn.innerHTML= 'Click to Submit';
