@@ -5,6 +5,7 @@
         sectionThree= document.querySelector('.section-three'),
         match,
         score=0,
+        finalScore,
         radioCheckedOne= document.questions.firstQuestion,
         radioCheckedTwo= document.questions.secondQuestion,
         radioCheckedThree= document.questions.thirdQuestion,
@@ -130,6 +131,7 @@
                 setTimeout(()=>{
                     sectionTwo.style.display= 'none';
                     sectionThree.style.display= 'flex';
+                    document.querySelector('h1').textContent= 'AWMS QUESTIONNAIRE';
                 },2500);
                 match= 0;
                 break;     
@@ -143,30 +145,19 @@
     document.querySelector('form').appendChild(submitBtn);
 
 
-    window.addEventListener('click', function(e){
+    window.addEventListener('change', function(e){
         if ((radioCheckedOne.value!=='') && (radioCheckedTwo.value!=='') && (radioCheckedThree.value!=='')) {
             submitBtn.disabled= false;
             submitBtn.addEventListener('click',checkAnswer);
         } 
     })
 
-    function disableRdBtns(){
-        radioBoxGroupOne.forEach(item=>{
-            item.setAttribute('disabled', true);
-        })
-
-        radioBoxGroupTwo.forEach(item=>{
-            item.setAttribute('disabled', true);
-        })
-
-        radioBoxGroupThree.forEach(item=>{
-            item.setAttribute('disabled', true);
-        })
-    }
-        
     function checkAnswer(e){
         e.preventDefault();
+        submitBtn.disabled= true;
         let answerOneSelection= document.querySelector('input[name="firstQuestion"]:checked');
+        let answerTwoSelection= document.querySelector('input[name="secondQuestion"]:checked');
+        let answerThreeSelection= document.querySelector('input[name="thirdQuestion"]:checked');
         switch (radioCheckedOne.value){
             case 'Excellent':
                 score++;
@@ -185,15 +176,32 @@
                 break;
         }
         disableRdBtns();
-        displayScore(answerOneSelection, score);
+        displayScore(answerOneSelection, answerTwoSelection, answerThreeSelection, score);
     }
 
-    function displayScore(answerOneSelection, score){
-        answerOneSelection.parentElement.className= "correct-answer"
-        finalScore= (((score/numberOfQuestions) * 100).toFixed(2));
+    function disableRdBtns(){
+        radioBoxGroupOne.forEach(item=>{
+            item.setAttribute('disabled', true);
+        })
 
-        // alert(`Final Score: ${finalScore}`);
-        /*
-        Stuff to work on now: Create h3 with score and message scroll down to view results and change attribute to show x or checkmark on each answer */
+        radioBoxGroupTwo.forEach(item=>{
+            item.setAttribute('disabled', true);
+        })
+
+        radioBoxGroupThree.forEach(item=>{
+            item.setAttribute('disabled', true);
+        })
+    }
+        
+    function displayScore(answerOneSelection, answerTwoSelection, answerThreeSelection, score){
+        let scoreMessage= document.createElement('div');
+        scoreMessage.className= 'score-div';
+        answerOneSelection.parentElement.className= "correct-answer";
+        answerTwoSelection.parentElement.className= "correct-answer";
+        answerThreeSelection.parentElement.className= "correct-answer";
+        finalScore= (((score/numberOfQuestions) * 100).toFixed(2));
+        scoreMessage.innerHTML= `${finalScore} scroll down to review correct answers`;
+        document.querySelector('h1').append(scoreMessage);
+        /*Stuff to work on now: Create h3 with score and message scroll down to view results and change attribute to show x or checkmark on each answer */
     }
 })();
